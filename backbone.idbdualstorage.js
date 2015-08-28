@@ -470,14 +470,14 @@
 	Backbone.Collection.prototype.syncDirtyAndDestroyed = function syncDirtyAndDestroyed(done) {
 		var self = this;
 		var errors = [];
-		self.syncDirty(function (err, dirtyResponse) {
+		self.syncDestroyed(function (err, destroyedResponse) {
 			if (err) {
 				if (_.isArray(err))
 					errors = errors.concat(err);
 				else
 					errors.push(err);
 			}
-			self.syncDestroyed(function (err, destroyedResponse) {
+			self.syncDirty(function (err, dirtyResponse) {
 				if (err) {
 					if (_.isArray(err))
 						errors = errors.concat(err);
@@ -543,20 +543,29 @@
 					}
 					else {
 						options.success = function (resp) {
-							if (options.dirty) {
-								var updatedModel = modelUpdatedWithResponse(model, resp);
-								store.addDirty(updatedModel, function (err) {
-									return responseHandler(err, updatedModel.attributes);
-								});
-							}
-							else {
-								return responseHandler(null, model.attributes);
-							}
+							// If the model is already in the storage there is nothing to create,
+							// just return stored data.
+							return responseHandler(null, resp);
 						};
 						options.error = function (err) {
-							return responseHandler(err);
+							// Model not found, create it!
+							options.success = function (resp) {
+								if (options.dirty) {
+									var updatedModel = modelUpdatedWithResponse(model, resp);
+									store.addDirty(updatedModel, function (err) {
+										return responseHandler(err, updatedModel.attributes);
+									});
+								}
+								else {
+									return responseHandler(null, model.attributes);
+								}
+							};
+							options.error = function (err) {
+								return responseHandler(err);
+							};
+							_indexedDbSync('create', model, options);
 						};
-						_indexedDbSync(method, model, options);
+						_indexedDbSync('read', model, options);
 					}
 					break;
 				case 'update':

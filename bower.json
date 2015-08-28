@@ -1,7 +1,7 @@
 {
   "name": "Backbone.IDBDualStorage",
   "main": "backbone.idbdualstorage.js",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "homepage": "https://github.com/sonoio/Backbone.IDBDualStorage",
   "description": "A dual (IndexedDB and REST) sync adapter for Backbone.js",
   "moduleType": [
