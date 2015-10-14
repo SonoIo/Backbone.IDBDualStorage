@@ -38,24 +38,19 @@
 	var DirtyStore = function DirtyStore() {};
 
 	DirtyStore.getInstance = function getInstance(done) {
-		/* // Singleton
+		// Singleton
 		if (!instance) {
-			var instance = new DirtyStore();
+			instance = new DirtyStore();
 			instance.init(function (err) {
 				if (err) return done(err);
 				return done(null, instance);
 			});
 		}
 		else {
-			done(null, instance);
+			setTimeout(function () {
+				done(null, instance);
+			});
 		}
-		*/
-
-		var newInstance = new DirtyStore();
-		newInstance.init(function (err) {
-			if (err) return done(err);
-			return done(null, newInstance);
-		});
 	};
 
 	DirtyStore.prototype.init = function init(done) {
@@ -522,7 +517,7 @@
 
 			var responseHandler = function responseHandler(err, result) {
 				// Close DB connection
-				store.close();
+				// store.close();
 				if (err) return error(err);
 				success(result);
 			};
@@ -624,7 +619,7 @@
 				case 'reset':
 					var resetCallback = function resetCallback() {
 						// Close DB connection
-						store.close();
+						// store.close();
 						_indexedDbSync('delete', model, options);
 					};
 					var storeName;
