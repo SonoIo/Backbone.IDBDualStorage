@@ -382,7 +382,7 @@
 			aModel.save(null, {
 				success: function (resp) {
 					response[aModel.id] = resp;
-					return next(); 
+					return next();
 				},
 				error: function (model, err) {
 					// keeps all failed requests
@@ -434,7 +434,7 @@
 			aModel.destroy({
 				success: function (resp) {
 					response[aModel.id] = resp;
-					return next(); 
+					return next();
 				},
 				error: function (model, err) {
 					// keeps all failed requests
@@ -808,9 +808,8 @@
 						});
 						return relayErrorCallback(resp);
 					};
-					model.set(model.idAttribute, null, {
-						silent: true
-					});
+					model.set('cid', model.id, { silent: true });
+					model.set(model.idAttribute, null, { silent: true });
 					return _onlineSync('create', model, options);
 				}
 				else {
@@ -856,7 +855,7 @@
 	};
 
 	// backbone-indexeddb puts the original Backbone.sync into Backbone.ajaxSync,
-	// this behaviour, could change in the near future, and I hope it does, 
+	// this behaviour, could change in the near future, and I hope it does,
 	// so I applied this workaround to be sure that all will works fine
 	if (typeof Backbone.ajaxSync === 'undefined')
 		Backbone.ajaxSync = Backbone.sync;
@@ -871,4 +870,3 @@
 		DirtyStore: DirtyStore
 	};
 }));
-
