@@ -1,7 +1,7 @@
 ;(function (root, factory) {
 
 	if (typeof define === 'function' && define.amd) {
-		define(['backbone', 'underscore', 'backbone-indexeddb', 'idb'], function (Backbone, _, indexedDbSync, IDB) {
+		define(['backbone', 'underscore', 'indexeddb-backbonejs-adapter', 'idb'], function (Backbone, _, indexedDbSync, IDB) {
 			var obj = factory(root, Backbone, _, indexedDbSync, IDB);
 			root.Backbone.sync = obj.dualSync;
 			return obj;
@@ -10,7 +10,7 @@
 	else if (typeof exports !== 'undefined') {
 		var Backbone = require('backbone');
 		var _ = require('underscore');
-		var indexedDbSync = require('backbone-indexeddb').sync;
+		var indexedDbSync = require('indexeddb-backbonejs-adapter').sync;
 		var IDB = require('idb');
 		module.exports = factory(root, Backbone, _, indexedDbSync, IDB);
 	}
