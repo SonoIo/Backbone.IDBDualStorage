@@ -1,5 +1,5 @@
 
-# Backbone IndexedDB DualStorage adapter (don't use in production!)
+# Backbone IndexedDB DualStorage adapter
 
 Inspired by [Backbone.dualStorage](https://github.com/nilbus/Backbone.dualStorage) but with bigger database capabilities thanks to IndexedDB.
 
@@ -29,4 +29,3 @@ Inspired by [Backbone.dualStorage](https://github.com/nilbus/Backbone.dualStorag
 # License
 
 MIT
-
